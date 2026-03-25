@@ -1,0 +1,73 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Math Score Predictor</title>
+</head>
+<body>
+    <h1>Math Score Predictor</h1>
+
+    {% if error_message %}
+    <p style="color: #b00020;"><strong>Error:</strong> {{ error_message }}</p>
+    {% endif %}
+
+    <form action="/predictdata" method="post">
+        <label>Gender</label>
+        <select name="gender" required>
+            <option value="male" {% if form_data and form_data.get('gender') == 'male' %}selected{% endif %}>Male</option>
+            <option value="female" {% if form_data and form_data.get('gender') == 'female' %}selected{% endif %}>Female</option>
+        </select>
+        <br /><br />
+
+        <label>Race/Ethnicity</label>
+        <select name="race_ethnicity" required>
+            <option value="group A" {% if form_data and form_data.get('race_ethnicity') == 'group A' %}selected{% endif %}>Group A</option>
+            <option value="group B" {% if form_data and form_data.get('race_ethnicity') == 'group B' %}selected{% endif %}>Group B</option>
+            <option value="group C" {% if form_data and form_data.get('race_ethnicity') == 'group C' %}selected{% endif %}>Group C</option>
+            <option value="group D" {% if form_data and form_data.get('race_ethnicity') == 'group D' %}selected{% endif %}>Group D</option>
+            <option value="group E" {% if form_data and form_data.get('race_ethnicity') == 'group E' %}selected{% endif %}>Group E</option>
+        </select>
+        <br /><br />
+
+        <label>Parental Education</label>
+        <select name="parental_level_of_education" required>
+            <option value="associate's degree" {% if form_data and form_data.get('parental_level_of_education') == "associate's degree" %}selected{% endif %}>Associate's degree</option>
+            <option value="bachelor's degree" {% if form_data and form_data.get('parental_level_of_education') == "bachelor's degree" %}selected{% endif %}>Bachelor's degree</option>
+            <option value="high school" {% if form_data and form_data.get('parental_level_of_education') == 'high school' %}selected{% endif %}>High school</option>
+            <option value="master's degree" {% if form_data and form_data.get('parental_level_of_education') == "master's degree" %}selected{% endif %}>Master's degree</option>
+            <option value="some college" {% if form_data and form_data.get('parental_level_of_education') == 'some college' %}selected{% endif %}>Some college</option>
+            <option value="some high school" {% if form_data and form_data.get('parental_level_of_education') == 'some high school' %}selected{% endif %}>Some high school</option>
+        </select>
+        <br /><br />
+
+        <label>Lunch</label>
+        <select name="lunch" required>
+            <option value="free/reduced" {% if form_data and form_data.get('lunch') == 'free/reduced' %}selected{% endif %}>Free/reduced</option>
+            <option value="standard" {% if form_data and form_data.get('lunch') == 'standard' %}selected{% endif %}>Standard</option>
+        </select>
+        <br /><br />
+
+        <label>Test Preparation Course</label>
+        <select name="test_preparation_course" required>
+            <option value="none" {% if form_data and form_data.get('test_preparation_course') == 'none' %}selected{% endif %}>None</option>
+            <option value="completed" {% if form_data and form_data.get('test_preparation_course') == 'completed' %}selected{% endif %}>Completed</option>
+        </select>
+        <br /><br />
+
+        <label>Reading Score</label>
+        <input type="number" name="reading_score" min="0" max="100" step="0.01" value="{{ form_data.get('reading_score', '') if form_data else '' }}" required />
+        <br /><br />
+
+        <label>Writing Score</label>
+        <input type="number" name="writing_score" min="0" max="100" step="0.01" value="{{ form_data.get('writing_score', '') if form_data else '' }}" required />
+        <br /><br />
+
+        <button type="submit">Predict</button>
+    </form>
+
+    {% if results is defined %}
+    <h2>Predicted Math Score: {{ results }}</h2>
+    {% endif %}
+</body>
+</html>
